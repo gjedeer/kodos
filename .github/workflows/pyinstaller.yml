@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - run: "sudo apt install python3-pyqt5 build-essential"
+      - run: "sudo apt install python3-pyqt5 build-essential pyqt5-dev-tools"
       - run: "python3 -m pip install --upgrade pip setuptools wheel pyinstaller"
       - name: Run setup.py build
         run: "python3 setup.py build"
