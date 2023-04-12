@@ -1,0 +1,24 @@
+name: Build kodos for Linux
+run-name: ${{ github.actor }} pushed commit ${{ github.sha }}
+on: [push]
+jobs:
+  Build-Linux:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: "apt install python3-pyqt5"
+      - run: "python3 -m pip install --upgrade pip setuptools wheel pyinstaller"
+      - name: Run setup.py build
+        run: "python3 setup.py build"
+      - name: Run setup.py install
+        run: "python3 setup.py install"
+      - name: Run pyinstaller
+        run: pyinstaller --onefile bin/kodos
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v3
+        with:
+          name: production
+          path: ./dist
