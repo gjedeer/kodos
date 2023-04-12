@@ -14,7 +14,7 @@ jobs:
       - name: Run setup.py build
         run: "python3 setup.py build"
       - name: Run setup.py install
-        run: "python3 setup.py install"
+        run: "sudo python3 setup.py install"
       - name: Run pyinstaller
         run: pyinstaller --onefile bin/kodos
       - name: Upload production-ready build files
