@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} pushed commit ${{ github.sha }}
 on: [push]
 jobs:
   Build-Linux:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v3
