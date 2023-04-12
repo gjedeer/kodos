@@ -1,0 +1,26 @@
+name: Build kodos for Linux
+run-name: ${{ github.actor }} pushed commit ${{ github.sha }}
+on: [push]
+jobs:
+  Build-Linux:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: "sudo apt install python3-pyqt5 build-essential pyqt5-dev-tools"
+      - run: "python3 -m pip install --upgrade pip setuptools wheel pyinstaller"
+      - name: Run setup.py build
+        run: "python3 setup.py build"
+      - name: Run setup.py install
+        run: "sudo python3 setup.py install"
+      - name: Run pyinstaller
+        run: pyinstaller --onefile bin/kodos
+      - name: Rename artifact
+        run: ln dist/kodos dist/kodos-x86_64-pyinstaller-${{ github.sha }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: kodos-x86_64-pyinstaller-${{ github.sha }}
+          path: ./dist/kodos-x86_64-pyinstaller-${{ github.sha }}
